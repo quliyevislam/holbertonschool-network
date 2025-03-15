@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
+# This script will change your home IP address to the one you provide
 
-docker run -d --restart=always --name=dns-server -p 53:53/udp --cap-add=NET_ADMIN andyshinn/dnsmasq:2.78
-
-sudo sed -i '/^nameserver/ d' /etc/resolv.conf
-echo "nameserver 127.0.0.2" | sudo tee -a /etc/resolv.conf
-
-sudo sed -i '/^address=\/facebook.com/ d' /etc/dnsmasq.d/02-custom-dns.conf
-echo "address=/facebook.com/8.8.8.8" | sudo tee -a /etc/dnsmasq.d/02-custom-dns.conf
-
-docker restart dns-server
+echo -e "127.0.0.2\tlocalhost\n8.8.8.8\tfacebook.com" | sudo tee -a /etc/hosts
